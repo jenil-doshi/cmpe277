@@ -14,22 +14,6 @@ import com.sjsu.cmpe277.util.Constants;
 @Configuration
 @ComponentScan(basePackages = { "com.sjsu.cmpe277" })
 public class MvcConfig extends WebMvcConfigurerAdapter {
- 
-	/*@Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/assets/**").addResourceLocations("/assets/");
-        registry.addResourceHandler("/WEB-INF/views/**").addResourceLocations("/WEB-INF/views/");
-    }*/
-
-	/*@Bean
-	public ViewResolver viewResolver() {
-		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-		viewResolver.setViewClass(JstlView.class);
-		viewResolver.setPrefix("/WEB-INF/views/");
-		viewResolver.setSuffix(".jsp");
-	
-		return viewResolver;
-	}*/
 	
 	@Bean(name = "dataSource")
 	public DriverManagerDataSource dataSource() {

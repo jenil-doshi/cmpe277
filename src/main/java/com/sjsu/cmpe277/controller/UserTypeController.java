@@ -17,18 +17,14 @@ public class UserTypeController {
 	@Autowired
 	UserTypeService userTypeService;
 	
-	 @RequestMapping(method = RequestMethod.GET, produces = "application/json")
-	 public String sayHello() {
-	     return "greeting Hello World from Spring 4 MVC";
-	 }
+	@RequestMapping(value = "/user/{userId}/{userType}", method = RequestMethod.POST, produces = "application/json")
 	
-	@RequestMapping(value = "/user/{userId}/{userType}", method = RequestMethod.GET)
-	@ResponseBody
-    public UserType insertUserType(@PathVariable("userId") int userId, @PathVariable("userType") String userType ) {
-		System.out.println("User Id: " + userId);
-		System.out.println("User Type: " + userType);
+    public @ResponseBody UserType insertUserType(@PathVariable("userId") int userId, @PathVariable("userType") String userType ) {
         UserType user = userTypeService.insertUserType(userId, userType);
-        return user;
+        if(user==null)
+        	return null;
+        else
+        	return user;
     }
 	
 }
