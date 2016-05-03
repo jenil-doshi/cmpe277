@@ -17,10 +17,10 @@ public class UserTypeController {
 	@Autowired
 	UserTypeService userTypeService;
 	
-	@RequestMapping(value = "/user/{userId}/{userType}", method = RequestMethod.POST, produces = "application/json")
+	@RequestMapping(value = "/user/{emailId}/{userType}", method = RequestMethod.POST, produces = "application/json")
 	
-    public @ResponseBody UserType insertUserType(@PathVariable("userId") int userId, @PathVariable("userType") String userType ) {
-        UserType user = userTypeService.insertUserType(userId, userType);
+    public @ResponseBody UserType insertUserType(@PathVariable("emailId") String emailId, @PathVariable("userType") String userType ) {
+        UserType user = userTypeService.insertUserType(emailId, userType);
         if(user==null)
         	return null;
         else

@@ -2,14 +2,15 @@ package com.sjsu.cmpe277.model;
 
 public class UserType {
 
-int id;
+String emailId;
 String userType;
 
-public int getId() {
-	return id;
+
+public String getEmailId() {
+	return emailId;
 }
-public void setId(int id) {
-	this.id = id;
+public void setEmailId(String emailId) {
+	this.emailId = emailId;
 }
 public String getUserType() {
 	return userType;

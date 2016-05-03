@@ -23,15 +23,15 @@ public class UserTypeDaoImpl implements UserTypeDao {
 	}
 	
 	@Override
-	public UserType insertUserType(int userId, String userType) {
+	public UserType insertUserType(String emailId, String userType) {
 		
-		String sql = "INSERT INTO USERS (userId, userType) VALUES (?, ?)";
+		String sql = "INSERT INTO USERS (emailId, userType) VALUES (?, ?)";
 		Connection conn = null;
 		
 		try {
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setInt(1, userId);
+			ps.setString(1, emailId);
 			ps.setString(2, userType);
 			ps.executeUpdate();
 			ps.close();
@@ -48,7 +48,7 @@ public class UserTypeDaoImpl implements UserTypeDao {
 		}
 		
 		UserType user = new UserType();
-		user.setId(userId);
+		user.setEmailId(emailId);
 		user.setUserType(userType);
 		
 		return user;
