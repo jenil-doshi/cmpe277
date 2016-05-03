@@ -25,7 +25,7 @@ public class UserTypeDaoImpl implements UserTypeDao {
 	@Override
 	public UserType insertUserType(String emailId, String userType) {
 		
-		String sql = "INSERT INTO USERS (emailId, userType) VALUES (?, ?)";
+		String sql = "INSERT INTO users (emailId, userType) VALUES (?, ?)";
 		Connection conn = null;
 		
 		try {
