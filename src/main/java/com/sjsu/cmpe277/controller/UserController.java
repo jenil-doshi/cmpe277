@@ -8,14 +8,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.sjsu.cmpe277.model.UserType;
-import com.sjsu.cmpe277.service.UserTypeService;
+import com.sjsu.cmpe277.model.User;
+import com.sjsu.cmpe277.service.UserService;
 
 @Controller
-public class UserTypeController {
+public class UserController {
 
 	@Autowired
-	UserTypeService userTypeService;
+	UserService userTypeService;
 
 	@RequestMapping(value = "/", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody String homepage() {
@@ -23,7 +23,7 @@ public class UserTypeController {
 	}
 
 	@RequestMapping(value = "/userType", method = RequestMethod.POST, consumes="application/json", headers = "content-type=application/x-www-form-urlencoded")
-	public @ResponseBody UserType insertUserType(HttpServletRequest request) {
+	public @ResponseBody User insertUserType(HttpServletRequest request) {
 		return userTypeService.insertUserType(request.getParameter("emailId"),request.getParameter("userType"));
 	}
 

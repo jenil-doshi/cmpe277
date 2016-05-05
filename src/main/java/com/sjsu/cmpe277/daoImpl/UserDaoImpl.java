@@ -9,11 +9,11 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.sjsu.cmpe277.dao.UserTypeDao;
-import com.sjsu.cmpe277.model.UserType;
+import com.sjsu.cmpe277.dao.UserDao;
+import com.sjsu.cmpe277.model.User;
 
 @Repository
-public class UserTypeDaoImpl implements UserTypeDao {
+public class UserDaoImpl implements UserDao {
 
 	@Autowired
 	DataSource dataSource;
@@ -23,7 +23,7 @@ public class UserTypeDaoImpl implements UserTypeDao {
 	}
 	
 	@Override
-	public UserType insertUserType(String emailId, String userType) {
+	public User insertUserType(String emailId, String userType) {
 		
 		String sql = "INSERT INTO users (emailId, userType) VALUES (?, ?)";
 		Connection conn = null;
@@ -47,11 +47,17 @@ public class UserTypeDaoImpl implements UserTypeDao {
 			}
 		}
 		
-		UserType user = new UserType();
+		User user = new User();
 		user.setEmailId(emailId);
 		user.setUserType(userType);
 		
 		return user;
+	}
+
+	@Override
+	public User getUserType(String emailId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

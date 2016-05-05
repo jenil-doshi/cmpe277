@@ -1,6 +1,6 @@
 package com.sjsu.cmpe277.model;
 
-public class UserType {
+public class User {
 
 String emailId;
 String userType;
