@@ -4,5 +4,5 @@ import com.sjsu.cmpe277.model.User;
 
 public interface UserService {
 
-	public User insertUserType(String emailId, String userType);
+	public User insertUserType(User user);
 }

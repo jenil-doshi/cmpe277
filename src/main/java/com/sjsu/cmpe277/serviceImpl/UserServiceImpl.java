@@ -14,8 +14,8 @@ public class UserServiceImpl implements UserService {
 	UserDao userTypeDao;
 	
 	@Override
-	public User insertUserType(String emailId, String userType) {
-		return userTypeDao.insertUserType(emailId, userType);
+	public User insertUserType(User user) {
+		return userTypeDao.insertUserType(user);
 	}
 
 }

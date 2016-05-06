@@ -23,7 +23,7 @@ public class UserDaoImpl implements UserDao {
 	}
 	
 	@Override
-	public User insertUserType(String emailId, String userType) {
+	public User insertUserType(User user) {
 		
 		String sql = "INSERT INTO users (emailId, userType) VALUES (?, ?)";
 		Connection conn = null;
@@ -31,8 +31,8 @@ public class UserDaoImpl implements UserDao {
 		try {
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setString(1, emailId);
-			ps.setString(2, userType);
+			ps.setString(1, user.getEmailId());
+			ps.setString(2, user.getUserType());
 			ps.executeUpdate();
 			ps.close();
 			
@@ -46,10 +46,6 @@ public class UserDaoImpl implements UserDao {
 				} catch (SQLException e) {}
 			}
 		}
-		
-		User user = new User();
-		user.setEmailId(emailId);
-		user.setUserType(userType);
 		
 		return user;
 	}

@@ -15,7 +15,6 @@ public class PostServiceImpl implements PostService {
 	
 	@Override
 	public Posting insertPosting(Posting posting) {
-		// TODO Auto-generated method stub
 		return landLordDao.insertPosting(posting);
 	}
 

@@ -1,6 +1,6 @@
 package com.sjsu.cmpe277.model;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Posting {
 
@@ -17,7 +17,8 @@ public class Posting {
 	private String contact;
 	private String email;
 	private String description;
-	private long picture;
+	private String picture;
+	private String status;
 	private int viewCount;
 	private Date time;
 	public String getPostingName() {
@@ -98,11 +99,17 @@ public class Posting {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public long getPicture() {
+	public String getPicture() {
 		return picture;
 	}
-	public void setPicture(long picture) {
+	public void setPicture(String picture) {
 		this.picture = picture;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	public int getViewCount() {
 		return viewCount;

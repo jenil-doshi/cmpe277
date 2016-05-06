@@ -4,6 +4,6 @@ import com.sjsu.cmpe277.model.User;
 
 public interface UserDao {
 
-	public User insertUserType(String emailId, String userType);
+	public User insertUserType(User user);
 	public User getUserType(String emailId);
 }

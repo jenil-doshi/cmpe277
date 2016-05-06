@@ -1,9 +1,8 @@
 package com.sjsu.cmpe277.controller;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,8 +22,8 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/userType", method = RequestMethod.POST, consumes="application/json", headers = "content-type=application/x-www-form-urlencoded")
-	public @ResponseBody User insertUserType(HttpServletRequest request) {
-		return userTypeService.insertUserType(request.getParameter("emailId"),request.getParameter("userType"));
+	public @ResponseBody User insertUserType(@RequestBody User user) {
+		return userTypeService.insertUserType(user);
 	}
 
 }
