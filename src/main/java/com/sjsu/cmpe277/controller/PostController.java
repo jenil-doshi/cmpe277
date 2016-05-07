@@ -1,7 +1,12 @@
 package com.sjsu.cmpe277.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,9 +21,21 @@ public class PostController {
 	@Autowired
 	PostService landlordService;
 	
-	@RequestMapping(value = "/posting", method = RequestMethod.POST, consumes="application/json", headers = "content-type=application/x-www-form-urlencoded")
-	public @ResponseBody Posting insertUserType(@RequestBody Posting posting) {
-		return landlordService.insertPosting(posting);
+	@RequestMapping(value = "/post", method = RequestMethod.POST, consumes="application/json")
+	public @ResponseBody ResponseEntity<Posting> insertPosting(@RequestBody Posting posting) {
+		Posting postingObj = landlordService.insertPosting(posting);
+		return new ResponseEntity<Posting>(postingObj, HttpStatus.OK);
 	}
-
+	
+	@RequestMapping(value = "/post/{emailId:.+}", method = RequestMethod.GET, produces="application/json")
+	public @ResponseBody ResponseEntity<List<Posting>> getListPosting(@PathVariable String emailId) {
+		List<Posting> postingObj = landlordService.getListPosting(emailId);
+		return new ResponseEntity<List<Posting>>(postingObj, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/post/{postName}", method = RequestMethod.POST, produces="application/json")
+	public @ResponseBody ResponseEntity<List<Posting>> removePosting(@PathVariable String postName) {
+		List<Posting> postingObj = landlordService.getListPosting(postName);
+		return new ResponseEntity<List<Posting>>(postingObj, HttpStatus.OK);
+	}
 }

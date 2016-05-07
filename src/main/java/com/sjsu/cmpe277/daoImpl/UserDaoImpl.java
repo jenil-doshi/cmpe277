@@ -2,6 +2,7 @@ package com.sjsu.cmpe277.daoImpl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.sql.DataSource;
@@ -24,10 +25,8 @@ public class UserDaoImpl implements UserDao {
 	
 	@Override
 	public User insertUserType(User user) {
-		
-		String sql = "INSERT INTO users (emailId, userType) VALUES (?, ?)";
 		Connection conn = null;
-		
+		String sql = "INSERT INTO users (emailId, userType) VALUES (?, ?)";		
 		try {
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
@@ -52,8 +51,31 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public User getUserType(String emailId) {
-		// TODO Auto-generated method stub
-		return null;
+		Connection conn = null;
+		User user = new User();
+		String sql = "select * from users where emailId = ?";		
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, emailId);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				user.setEmailId(rs.getString("emailId"));
+				user.setUserType(rs.getString("userType"));	
+			}
+			ps.close();
+			
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+			
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {}
+			}
+		}
+		return user;
 	}
 
 }

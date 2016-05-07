@@ -1,5 +1,7 @@
 package com.sjsu.cmpe277.serviceImpl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +24,11 @@ public class PostServiceImpl implements PostService {
 	public Posting removePosting(String postingName) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public List<Posting> getListPosting(String emailId) {
+		return landLordDao.getListPosting(emailId);
 	}
 
 }
