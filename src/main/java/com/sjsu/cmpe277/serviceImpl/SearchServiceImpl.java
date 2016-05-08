@@ -16,8 +16,8 @@ public class SearchServiceImpl implements SearchService {
 	
 	@Override
 	public Search insertsearchResult(Search search) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return searchDao.insertsearchResult(search);
 	}
 
 	@Override
