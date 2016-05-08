@@ -1,5 +1,9 @@
 package com.sjsu.cmpe277.daoImpl;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +25,42 @@ public class FavoriteDaoImpl implements FavoriteDao {
 	@Override
 	public void insertFavorite(String emailId, String postingId) {
 		// TODO Auto-generated method stub
+		
+		String email;
+		String postId;
+		Connection conn = null;
+		
+		String sql = "INSERT INTO favorite (emailId,postingId) VALUES (?,?)";
+		
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			
+			if(emailId == null)
+				email = null;
+			else email = emailId;
+			
+			if(postingId == null)
+				postId = null;
+			else postId = postingId;
+			
+			
+			ps.setString(1, email);
+			ps.setString(2, postId);
+			
+			ps.executeUpdate();
+			ps.close();
+			
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+			
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {}
+			}
+		}
 		
 	}
 
