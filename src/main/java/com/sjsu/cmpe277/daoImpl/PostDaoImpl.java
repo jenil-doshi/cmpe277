@@ -8,6 +8,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.crypto.spec.PSource;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,8 +56,7 @@ public class PostDaoImpl implements PostDao {
 		String sql = null;
 		List<Posting> insertedList;
 		List<Posting> list = getListPosting(posting.getEmail());
-		
-		if(list.isEmpty()){
+		if(posting.getId()==0){
 			sql = "INSERT INTO posting (ownerName,postingName,street,city,state,zip,propertyType,room,"
 					+ "bath,sqft,price,contact,email,description,picture,status,viewCount,time) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		}
@@ -170,7 +170,7 @@ public class PostDaoImpl implements PostDao {
 			ps.executeUpdate();
 			ps.close();
 			
-			if(list.isEmpty()){
+			if(posting.getId()==0){
 				emailUtility.sendEmail(null, posting, "New");
 			}
 			else{
