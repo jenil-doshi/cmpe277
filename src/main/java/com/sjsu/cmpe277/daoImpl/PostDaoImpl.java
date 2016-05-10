@@ -194,6 +194,7 @@ public class PostDaoImpl implements PostDao {
 				posting.setTime(rs.getDate("time"));
 				postingList.add(posting);
 			}
+			
 			ps.close();
 			
 		} catch (SQLException e) {

@@ -1,5 +1,7 @@
 package com.sjsu.cmpe277.serviceImpl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,9 +23,9 @@ public class FavoriteServiceImpl implements FavoriteService {
 	}
 
 	@Override
-	public Posting getFavorite(String emailId) {
+	public List<Posting> getFavorite(String emailId) {
 		// TODO Auto-generated method stub
-		return null;
+		return favoriteDao.getFavorite(emailId);
 	}
 	
 
