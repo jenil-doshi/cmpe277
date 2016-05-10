@@ -4,6 +4,8 @@ import java.sql.Date;
 
 public class Posting {
 
+	private int id;
+	private String ownerName;
 	private String postingName;
 	private String street;
 	private String city;
@@ -21,6 +23,19 @@ public class Posting {
 	private String status;
 	private int viewCount;
 	private Date time;
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getOwnerName() {
+		return ownerName;
+	}
+	public void setOwnerName(String ownerName) {
+		this.ownerName = ownerName;
+	}
 	public String getPostingName() {
 		return postingName;
 	}

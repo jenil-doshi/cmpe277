@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sjsu.cmpe277.model.Favorite;
 import com.sjsu.cmpe277.model.Posting;
-import com.sjsu.cmpe277.model.Search;
-import com.sjsu.cmpe277.model.User;
 import com.sjsu.cmpe277.service.FavoriteService;
 
 @Controller

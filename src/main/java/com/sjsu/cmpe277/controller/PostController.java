@@ -33,9 +33,4 @@ public class PostController {
 		return new ResponseEntity<List<Posting>>(postingObj, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/post/{postName}", method = RequestMethod.POST, produces="application/json")
-	public @ResponseBody ResponseEntity<List<Posting>> removePosting(@PathVariable String postName) {
-		List<Posting> postingObj = landlordService.getListPosting(postName);
-		return new ResponseEntity<List<Posting>>(postingObj, HttpStatus.OK);
-	}
 }

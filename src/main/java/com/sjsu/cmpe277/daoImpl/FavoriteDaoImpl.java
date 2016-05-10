@@ -69,7 +69,6 @@ public class FavoriteDaoImpl implements FavoriteDao{
 
 	@Override
 	public List<Posting> getFavorite(String emailId) {
-		// TODO Auto-generated method stub
 		Connection conn = null;
 		List<Posting> postingList = new ArrayList<Posting>();
 		
@@ -81,6 +80,8 @@ public class FavoriteDaoImpl implements FavoriteDao{
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				Posting posting = new Posting();
+				posting.setId(rs.getInt("id"));
+				posting.setOwnerName(rs.getString("ownerName"));
 				posting.setPostingName(rs.getString("postingName"));
 				posting.setStreet(rs.getString("street"));
 				posting.setCity(rs.getString("city"));

@@ -21,12 +21,6 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
-	public Posting removePosting(String postingName) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public List<Posting> getListPosting(String emailId) {
 		return landLordDao.getListPosting(emailId);
 	}

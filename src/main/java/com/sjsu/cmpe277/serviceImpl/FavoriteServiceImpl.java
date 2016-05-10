@@ -24,7 +24,6 @@ public class FavoriteServiceImpl implements FavoriteService {
 
 	@Override
 	public List<Posting> getFavorite(String emailId) {
-		// TODO Auto-generated method stub
 		return favoriteDao.getFavorite(emailId);
 	}
 	

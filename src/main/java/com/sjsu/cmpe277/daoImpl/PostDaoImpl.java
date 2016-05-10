@@ -29,6 +29,7 @@ public class PostDaoImpl implements PostDao {
 	@Override
 	public Posting insertPosting(Posting posting) {
 		
+		String ownerName;
 		String postingName;
 		String street;
 		String city;
@@ -47,12 +48,35 @@ public class PostDaoImpl implements PostDao {
 		int viewCount;
 		Date time;
 		Connection conn = null;
+		String sql = null;
 		
-		String sql = "INSERT INTO posting (postingName,street,city,state,zip,propertyType,room,"
-				+ "bath,sqft,price,contact,email,description,picture,status,viewCount,time) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		List<Posting> list = getListPosting(posting.getEmail());
+		
+		if(list == null){
+			System.out.println("inside insert");
+			sql = "INSERT INTO posting (ownerName,postingName,street,city,state,zip,propertyType,room,"
+					+ "bath,sqft,price,contact,email,description,picture,status,viewCount,time) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		}
+		else{
+			System.out.println("inside update");
+			for(int i=0; i<list.size(); i++){
+				int postingId = posting.getId();
+				int listPostingId = list.get(i).getId();
+				if(postingId == listPostingId){
+					sql = "update posting set ownerName=?,"
+							+ " postingName=?,street=?,city=?,state=?,zip=?,propertyType=?,room=?,bath=?,sqft=?,price=?,"
+							+ "contact=?,email=?,description=?,picture=?,status=?,viewCount=?,time=? where id=" + listPostingId;
+				}
+			}
+		}
+		
 		try {
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
+			
+			if(posting.getOwnerName() == null)
+				ownerName = null;
+			else ownerName = posting.getOwnerName();
 			
 			if(posting.getBath() == null)
 				bath = null;
@@ -122,23 +146,24 @@ public class PostDaoImpl implements PostDao {
 				status = null;
 			else status = posting.getStatus();
 			
-			ps.setString(1, postingName);
-			ps.setString(2, street);
-			ps.setString(3, city);
-			ps.setString(4, state);
-			ps.setString(5, zip);
-			ps.setString(6, propertyType);
-			ps.setString(7, room);
-			ps.setString(8, bath);
-			ps.setString(9, sqft);
-			ps.setInt(10, price);
-			ps.setString(11, contact);
-			ps.setString(12, email);
-			ps.setString(13, description);
-			ps.setString(14, picture);
-			ps.setString(15, status);
-			ps.setInt(16, viewCount);
-			ps.setDate(17, time);
+			ps.setString(1, ownerName);
+			ps.setString(2, postingName);
+			ps.setString(3, street);
+			ps.setString(4, city);
+			ps.setString(5, state);
+			ps.setString(6, zip);
+			ps.setString(7, propertyType);
+			ps.setString(8, room);
+			ps.setString(9, bath);
+			ps.setString(10, sqft);
+			ps.setInt(11, price);
+			ps.setString(12, contact);
+			ps.setString(13, email);
+			ps.setString(14, description);
+			ps.setString(15, picture);
+			ps.setString(16, status);
+			ps.setInt(17, viewCount);
+			ps.setDate(18, time);
 			
 			ps.executeUpdate();
 			ps.close();
@@ -156,18 +181,13 @@ public class PostDaoImpl implements PostDao {
 		
 		return posting;
 	}
-
-	@Override
-	public Posting removePosting(String postingName) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
 	@Override
 	public List<Posting> getListPosting(String emailId) {
+		System.out.println("Email Id in get: " + emailId);
 		Connection conn = null;
 		List<Posting> postingList = new ArrayList<Posting>();
-		Posting posting = new Posting();
+		
 		String sql = "select * from posting where email = ?";		
 		try {
 			conn = dataSource.getConnection();
@@ -175,6 +195,9 @@ public class PostDaoImpl implements PostDao {
 			ps.setString(1, emailId);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
+				Posting posting = new Posting();
+				posting.setId(rs.getInt("id"));
+				posting.setOwnerName(rs.getString("ownerName"));
 				posting.setPostingName(rs.getString("postingName"));
 				posting.setStreet(rs.getString("street"));
 				posting.setCity(rs.getString("city"));
@@ -193,6 +216,7 @@ public class PostDaoImpl implements PostDao {
 				posting.setViewCount(rs.getInt("viewCount"));
 				posting.setTime(rs.getDate("time"));
 				postingList.add(posting);
+				
 			}
 			
 			ps.close();
