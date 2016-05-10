@@ -22,9 +22,9 @@ public class PostController {
 	PostService landlordService;
 	
 	@RequestMapping(value = "/post", method = RequestMethod.POST, consumes="application/json")
-	public @ResponseBody ResponseEntity<Posting> insertPosting(@RequestBody Posting posting) {
-		Posting postingObj = landlordService.insertPosting(posting);
-		return new ResponseEntity<Posting>(postingObj, HttpStatus.OK);
+	public @ResponseBody ResponseEntity<List<Posting>> insertPosting(@RequestBody Posting posting) {
+		List<Posting> postingObj = landlordService.insertPosting(posting);
+		return new ResponseEntity<List<Posting>>(postingObj, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/post/{emailId:.+}", method = RequestMethod.GET, produces="application/json")

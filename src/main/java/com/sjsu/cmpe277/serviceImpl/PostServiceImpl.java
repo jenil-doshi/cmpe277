@@ -16,7 +16,7 @@ public class PostServiceImpl implements PostService {
 	PostDao landLordDao;
 	
 	@Override
-	public Posting insertPosting(Posting posting) {
+	public List<Posting> insertPosting(Posting posting) {
 		return landLordDao.insertPosting(posting);
 	}
 

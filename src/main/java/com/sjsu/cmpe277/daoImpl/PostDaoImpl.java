@@ -13,6 +13,7 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.sjsu.cmpe277.configuration.EmailUtility;
 import com.sjsu.cmpe277.dao.PostDao;
 import com.sjsu.cmpe277.model.Posting;
 
@@ -22,12 +23,15 @@ public class PostDaoImpl implements PostDao {
 	@Autowired
 	DataSource dataSource;
 	
+	@Autowired
+	EmailUtility emailUtility;
+	
 	public void setDataSource(DataSource dataSource) {
 		this.dataSource = dataSource;
 	}
 
 	@Override
-	public Posting insertPosting(Posting posting) {
+	public List<Posting> insertPosting(Posting posting) {
 		
 		String ownerName;
 		String postingName;
@@ -49,16 +53,14 @@ public class PostDaoImpl implements PostDao {
 		Date time;
 		Connection conn = null;
 		String sql = null;
-		
+		List<Posting> insertedList;
 		List<Posting> list = getListPosting(posting.getEmail());
 		
-		if(list == null){
-			System.out.println("inside insert");
+		if(list.isEmpty()){
 			sql = "INSERT INTO posting (ownerName,postingName,street,city,state,zip,propertyType,room,"
 					+ "bath,sqft,price,contact,email,description,picture,status,viewCount,time) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		}
 		else{
-			System.out.println("inside update");
 			for(int i=0; i<list.size(); i++){
 				int postingId = posting.getId();
 				int listPostingId = list.get(i).getId();
@@ -168,6 +170,21 @@ public class PostDaoImpl implements PostDao {
 			ps.executeUpdate();
 			ps.close();
 			
+			if(list.isEmpty()){
+				emailUtility.sendEmail(null, posting, "New");
+			}
+			else{
+				for(int i=0; i<list.size(); i++){
+					String newPostingStatus = posting.getStatus();
+					String oldPostingStatus = list.get(i).getStatus();
+					if(oldPostingStatus.equals(newPostingStatus)){
+					}
+					else{
+						emailUtility.sendEmail(oldPostingStatus, posting, "Update");
+					}
+				}	
+			}
+			insertedList = getListPosting(posting.getEmail());
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 			
@@ -178,13 +195,11 @@ public class PostDaoImpl implements PostDao {
 				} catch (SQLException e) {}
 			}
 		}
-		
-		return posting;
+		return insertedList;
 	}
 	
 	@Override
 	public List<Posting> getListPosting(String emailId) {
-		System.out.println("Email Id in get: " + emailId);
 		Connection conn = null;
 		List<Posting> postingList = new ArrayList<Posting>();
 		
