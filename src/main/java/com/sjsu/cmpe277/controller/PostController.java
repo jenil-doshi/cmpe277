@@ -33,4 +33,10 @@ public class PostController {
 		return new ResponseEntity<List<Posting>>(postingObj, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value = "/allPost", method = RequestMethod.GET, produces="application/json")
+	public @ResponseBody ResponseEntity<List<Posting>> getAllPosting() {
+		List<Posting> postingObj = landlordService.getAllPosting();
+		return new ResponseEntity<List<Posting>>(postingObj, HttpStatus.OK);
+	}
+	
 }

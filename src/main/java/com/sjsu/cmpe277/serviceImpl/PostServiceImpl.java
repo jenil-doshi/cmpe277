@@ -25,4 +25,9 @@ public class PostServiceImpl implements PostService {
 		return landLordDao.getListPosting(emailId);
 	}
 
+	@Override
+	public List<Posting> getAllPosting() {
+		return landLordDao.getAllPosting();
+	}
+
 }

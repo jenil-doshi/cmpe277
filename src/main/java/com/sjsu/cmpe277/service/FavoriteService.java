@@ -8,4 +8,5 @@ public interface FavoriteService {
 
 	public void insertFavorite(String emailId, String postingId);
 	public List<Posting> getFavorite(String emailId);
+	public boolean deleteFavorite(String emailId, int postId);
 }

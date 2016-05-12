@@ -17,7 +17,6 @@ public class FavoriteServiceImpl implements FavoriteService {
 
 	@Override
 	public void insertFavorite(String emailId, String postingId) {
-		// TODO Auto-generated method stub
 		favoriteDao.insertFavorite(emailId, postingId);
 		
 	}
@@ -25,6 +24,11 @@ public class FavoriteServiceImpl implements FavoriteService {
 	@Override
 	public List<Posting> getFavorite(String emailId) {
 		return favoriteDao.getFavorite(emailId);
+	}
+
+	@Override
+	public boolean deleteFavorite(String emailId, int postId) {
+		return favoriteDao.deleteFavorite(emailId, postId);
 	}
 	
 

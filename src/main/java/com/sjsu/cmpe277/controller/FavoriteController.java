@@ -32,4 +32,11 @@ public class FavoriteController {
 		List<Posting> postingObj = favoriteService.getFavorite(emailId);
 		return new ResponseEntity<List<Posting>>(postingObj, HttpStatus.OK);
 	}
+	
+	@RequestMapping(value = "/favorite/{emailId}/{postId}", method = RequestMethod.POST)
+	public @ResponseBody ResponseEntity<String> deleteFavorite(@PathVariable String emailId, @PathVariable int postId) {
+		if(favoriteService.deleteFavorite(emailId, postId))
+			return new ResponseEntity<String>("{ 'response' : 'success' }", HttpStatus.OK);
+		else return new ResponseEntity<String>(null);
+	}
 }

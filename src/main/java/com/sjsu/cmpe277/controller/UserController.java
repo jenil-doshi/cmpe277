@@ -19,7 +19,7 @@ public class UserController {
 	@Autowired
 	UserService userTypeService;
 
-	@RequestMapping(value = "/", method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public @ResponseBody String homepage() {
 		return "{ 'response' : 'success' }";
 	}

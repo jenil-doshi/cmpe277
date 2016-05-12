@@ -27,7 +27,6 @@ public class FavoriteDaoImpl implements FavoriteDao{
 
 	@Override
 	public void insertFavorite(String emailId, String postingId) {
-		// TODO Auto-generated method stub
 		
 		String email;
 		String postId;
@@ -53,18 +52,16 @@ public class FavoriteDaoImpl implements FavoriteDao{
 			
 			ps.executeUpdate();
 			ps.close();
-			
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
-			
+			throw new RuntimeException(e);			
 		} finally {
 			if (conn != null) {
 				try {
 					conn.close();
-				} catch (SQLException e) {}
+				} catch (SQLException e) {
+				}
 			}
 		}
-		
 	}
 
 	@Override
@@ -72,7 +69,7 @@ public class FavoriteDaoImpl implements FavoriteDao{
 		Connection conn = null;
 		List<Posting> postingList = new ArrayList<Posting>();
 		
-		String sql = "select * from posting inner join favorite on posting.email = favorite.emailId where favorite.emailId = ?";		
+		String sql = "select * from posting inner join favorite on posting.id = favorite.postingId where favorite.emailId = ?";		
 		try {
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
@@ -115,5 +112,33 @@ public class FavoriteDaoImpl implements FavoriteDao{
 		}
 		return postingList;
 	
+	}
+
+	@Override
+	public boolean deleteFavorite(String emailId, int postId) {
+		
+		boolean status=false;
+		Connection conn = null;
+		
+		String sql = "DELETE from favorite where favorite.emailId=? and favorite.postingId=?";		
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, emailId);
+			ps.setInt(2, postId);
+			ps.executeUpdate();
+			ps.close();
+			status=true;
+			return status;
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+			
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {}
+			}
+		}		
 	}
 }

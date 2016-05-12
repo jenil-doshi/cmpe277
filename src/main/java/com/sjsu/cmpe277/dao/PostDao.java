@@ -8,4 +8,5 @@ public interface PostDao {
 
 	public List<Posting> insertPosting(Posting posting);
 	public List<Posting> getListPosting(String emailId);
+	public List<Posting> getAllPosting();
 }

@@ -8,7 +8,6 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.crypto.spec.PSource;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -208,6 +207,56 @@ public class PostDaoImpl implements PostDao {
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, emailId);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Posting posting = new Posting();
+				posting.setId(rs.getInt("id"));
+				posting.setOwnerName(rs.getString("ownerName"));
+				posting.setPostingName(rs.getString("postingName"));
+				posting.setStreet(rs.getString("street"));
+				posting.setCity(rs.getString("city"));
+				posting.setState(rs.getString("state"));
+				posting.setZip(rs.getString("zip"));
+				posting.setPropertyType(rs.getString("propertyType"));
+				posting.setRoom(rs.getString("room"));
+				posting.setBath(rs.getString("bath"));
+				posting.setSqft(rs.getString("sqft"));
+				posting.setPrice(rs.getInt("price"));
+				posting.setContact(rs.getString("contact"));
+				posting.setEmail(rs.getString("email"));
+				posting.setDescription(rs.getString("description"));
+				posting.setPicture(rs.getString("picture"));
+				posting.setStatus(rs.getString("status"));
+				posting.setViewCount(rs.getInt("viewCount"));
+				posting.setTime(rs.getDate("time"));
+				postingList.add(posting);
+				
+			}
+			
+			ps.close();
+			
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+			
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {}
+			}
+		}
+		return postingList;
+	}
+
+	@Override
+	public List<Posting> getAllPosting() {
+		Connection conn = null;
+		List<Posting> postingList = new ArrayList<Posting>();
+		
+		String sql = "select * from posting";		
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				Posting posting = new Posting();
